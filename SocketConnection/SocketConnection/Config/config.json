@@ -1,0 +1,30 @@
+[
+  {
+    "UserName": "Vlad",
+    "Ip": "127.0.0.1",
+    "Port": 8005,
+    "RecipientPort": 8000,
+    "RecipientIp": "127.0.0.1"
+  },
+  {
+    "UserName": "Dimas",
+    "Ip": "127.0.0.1",
+    "Port": 8000,
+    "RecipientPort": 8005,
+    "RecipientIp": "127.0.0.1"
+  },
+  {
+    "UserName": "chel",
+    "Ip": "127.0.0.1",
+    "Port": 8000,
+    "RecipientPort": 8005,
+    "RecipientIp": "127.0.0.1"
+  },
+  {
+    "UserName": "Sas",
+    "Ip": "127.0.0.1",
+    "Port": 8000,
+    "RecipientPort": 8005,
+    "RecipientIp": "127.0.0.1"
+  }
+]
