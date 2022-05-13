@@ -23,40 +23,7 @@
       font-size: 17px;
     }
   }
-  @media (prefers-color-scheme: dark) {
-    .theme-green {
-      --primary-color: #2d333b;
-      --secondary-color: #cdd9e5;
-      --tertiary-color: #1e252b;
-      --background-color: #1c2128;
-      --focused-color: #339BFF;
-    }
   
-    .theme-dark {
-      --primary-color: #EDF5E1;
-      --secondary-color: #05386B;
-      --tertiary-color: #5CDB95;
-      --background-color: #8EE4AF;
-      --focused-color: #D2691E;
-    }
-  }
-  @media (prefers-color-scheme: light) {
-    .theme-green {
-      --primary-color: #EDF5E1;
-      --secondary-color: #05386B;
-      --tertiary-color: #5CDB95;
-      --background-color: #8EE4AF;
-      --focused-color: #33DFFF;
-    }
-  
-    .theme-dark {
-      --primary-color: #2d333b;
-      --secondary-color: #cdd9e5;
-      --tertiary-color: #1e252b;
-      --background-color: #1c2128;
-      --focused-color: #33DFFF;
-    }
-  }
   *, *:active {
     outline: none;
     font-family: Rosario;
@@ -322,79 +289,9 @@
     color: var(--secondary-color);
   }
   
-  .teams-input * {
-    font-size: 1.5em;
-    background: none;
-    border: none;
-    color: var(--secondary-color);
-    transition: font-size 0.1s;
-  }
-  .teams-input:hover {
-    font-size: 1.1em;
-  }
-  .teams-input .fa-times:hover {
-    cursor: pointer;
-  }
   
-  .settings-container {
-    width: 100%;
-    height: 75%;
-    color: var(--secondary-color);
-  }
   
-  .settings-row {
-    height: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2em 0 2em;
-  }
-  .settings-row h2 {
-    font-size: 1.5em;
-  }
-  .settings-row h3 {
-    align-self: flex-end;
-    font-size: 1.17em;
-    margin-right: 0.25em;
-  }
-  
-  .settings-col-info {
-    flex: 3;
-  }
-  
-  .settings-col-value {
-    flex: 2;
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    padding-bottom: 1em;
-  }
-  
-  .settings-row-buttons {
-    display: flex;
-    flex-direction: row;
-    padding-top: 1em;
-  }
-  
-  .settings-button {
-    flex: auto;
-    color: var(--secondary-color);
-    background-color: var(--tertiary-color);
-    border-radius: 5em;
-    min-height: 1.5em;
-    border: none;
-    font-size: 1.25em;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
-    transition: 0.3s color, 0.3s background-color;
-  }
-  .settings-button:hover {
-    background-color: var(--secondary-color);
-    color: var(--tertiary-color);
-  }
-  .settings-button:focus-visible {
-    color: var(--focused-color);
-    border: 1px dashed var(--focused-color);
-  }
+ 
   
   .words-center-container {
     height: 85%;
@@ -464,23 +361,7 @@
     font-size: 1.5em;
   }
   
-  .rules-container {
-    margin: 0em 1em 0em 1em;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .rules-container p, .rules-container h2 {
-    color: var(--secondary-color);
-  }
-  .rules-container p {
-    font-size: 1.1em;
-  }
-  .rules-container h2 {
-    padding-top: 1em;
-    font-size: 1.5em;
-  }
+ 
   
   .game-ul {
     max-width: 40em;

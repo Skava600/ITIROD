@@ -5,23 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alias</title>
     <link href="style.css" rel="stylesheet">
+    <link href="./styles/rules.css" rel="stylesheet">
+    <link href="./styles/settings.css" rel="stylesheet">
+    <link href="./styles/teams.css" rel="stylesheet">
+    <link href="./styles/themes.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/28f2c379dc.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="script.js"></script>
 </head>
 <body>
   <header>
-      <div>
-          <i class="fas fa-hourglass hi"></i>
-          <span>60</span>
-      </div>
+    <div class="header-counter opacity-0">
+        <i class="fas fa-hourglass hi"></i>
+        <h2 id="h2-time"></h2>
+    </div>
       <button id="button-header" class="button-header">
           <i class="fab fa-phoenix-framework"></i>
           <span>Alias</span>
       </button>
-      <div>
-          <i class="fas fa-star"></i>
-          <span>4</span>
-      </div>
+      <div class="header-counter opacity-0">
+        <i class="fas fa-star"></i>
+        <h2 id="h2-points"></h2>
+    </div>
   </header>
   <main>
       <!--Top Button-->
@@ -75,7 +78,7 @@
                           </div>
                       </div>
                       <div class="bottom-card-container">
-                          <button class="bottom-button">
+                          <button id="button-teams-add" class="bottom-button">
                               <span>Add New Team</span>
                           </button>
                       </div>
@@ -89,8 +92,8 @@
                               <h2>Round Time:</h2>
                               <h3>For which you must guess the words</h3>
                               <div class="settings-row-buttons">
-                                  <button class="settings-button margin-right">-30 sec.</button>
-                                  <button class="settings-button">+30 sec.</button>
+                                  <button id="button-time-sub" class="settings-button margin-right">-30 sec.</button>
+                                  <button id="button-time-add" class="settings-button">+30 sec.</button>
                               </div>
                           </div>
                           <div id="settings-col-time" class="settings-col-value">
@@ -115,27 +118,27 @@
                       </div>
                   </div>
 
-                  <!--Words Tab -->
-                  <div id="words-tab" class="tab center-card-container flex-direction-row display-none">
-                          <div class="words-col-border">
-                              <button id="button-words-left">
-                                  <i class="fas fa-arrow-left"></i>
-                              </button>
+                    <!--Words Tab -->
+                    <div id="words-tab" class="tab center-card-container flex-direction-row display-none">
+                        <div class="words-col-border">
+                            <button id="button-words-left">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
 
-                          </div>
-                          <div class="words-col-center">
-                              <div id="words-card" class="words-card">
-                                  <h1 id="h1-words-topic">Topic</h1>
-                                  <p id="p-words-description">Word1, Word2, Word3, ...</p>
-                              </div>
-                          </div>
-                          <div class="words-col-border">
-                              <button id="button-words-right">
-                                  <i class="fas fa-arrow-right"></i>
-                              </button>
-                          </div>
-                  </div>
-              </div>
+                        </div>
+                        <div class="words-col-center">
+                            <div id="words-card" class="words-card">
+                                <h1 id="h1-words-topic"></h1>
+                                <p id="p-words-description"></p>
+                            </div>
+                        </div>
+                        <div class="words-col-border">
+                            <button id="button-words-right">
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                </div>
+            </div>
 
               <!--Rules Side -->
               <div id="rules-side" class="side display-none">
@@ -177,36 +180,28 @@
                   </div>
               </div>
 
-              <!--Leaderboard Side -->
-              <div id="score-side" class="side display-none">
-                  <div class="top-card-container">
-                      <h1>Leaderboard<hr></h1>
-                  </div>
-                  <div class="center-card-container justify-content-center">
-                      <ul class="game-ul">
-                          <li>
-                              <h2>Team 'B'</h2>
-                              <h3>0</h3>
-                          </li>
-                          <li>
-                              <h2>Team 'A'</h2>
-                              <h3>0</h3>
-                          </li>
-                      </ul>
-                  </div>
-                  <div class="bottom-card-container">
-                      <button id="button-leaderboard" class="bottom-button">
-                          <span id="span-leaderboard">Turn 'A'</span>
-                      </button>
-                  </div>
-              </div>
-
-              <!--Game Side-->
-              <div id="game-side" class="side display-none">
-                  <article class="card-word">
-                      Word
-                  </article>
-              </div>
+               <!--Leaderboard Side -->
+               <div id="score-side" class="side display-none">
+                <div class="top-card-container">
+                    <h1>Leaderboard<hr></h1>
+                </div>
+                <div class="center-card-container justify-content-center">
+                    <ul id="ul-teams" class="game-ul">
+                    </ul>
+                </div>
+                <div class="bottom-card-container">
+                    <button id="button-leaderboard" class="bottom-button">
+                        <span id="span-leaderboard"></span>
+                    </button>
+                </div>
+            </div>
+            
+                <!--Game Side-->
+                <div id="game-side" class="side display-none">
+                    <article id="article-word" class="card-word">
+                        Word
+                    </article>
+                </div>
 
               <!--End Side-->
               <div id="end-side" class="side display-none">
@@ -214,33 +209,8 @@
                       <h1>Round Over!<hr></h1>
                   </div>
                   <div class="center-card-container justify-content-flex-start">
-                      <span id="span-end">0</span>
-                      <ul class="game-ul">
-                          <li>
-                              <h2>Word1</h2>
-                              <div>
-                                  <i class="fas fa-check-circle"></i>
-                                  <i class="far fa-times-circle"></i>
-                                  <i class="far fa-minus-square"></i>
-                              </div>
-                          </li>
-                          <li>
-                              <h2>Word2</h2>
-                              <div>
-                                  <i class="far fa-check-circle"></i>
-                                  <i class="fas fa-times-circle"></i>
-                                  <i class="far fa-minus-square"></i>
-                              </div>
-                          </li>
-                          <li>
-                              <h2>Word3</h2>
-                              <div>
-                                  <i class="far fa-check-circle"></i>
-                                  <i class="far fa-times-circle"></i>
-                                  <i class="fas fa-minus-square"></i>
-                              </div>
-                          </li>
-                      </ul>
+                      <span id="span-end"></span>
+                      <ul id="ul-end" class="game-ul"></ul>
                   </div>
                   <div class="bottom-card-container">
                       <button id="button-end" class="bottom-button">
@@ -258,6 +228,7 @@
           </button>
       </div>
   </main>
+  <script type="module" src="script.js"></script>
 
 </body>
 </html>
