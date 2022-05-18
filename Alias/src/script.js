@@ -1,8 +1,18 @@
 import wordsPack, {dices, teamPlaceholders} from "./data.js"
+import "./styles/rules.css";
+import "./styles/settings.css";
+import "./styles/teams.css";
+import "./styles/themes.css";
+import "./style.css";
+let user = {
+    id: "",
+    name: "",
+    hasSavedGame: false,
+    isSignedIn: false,
+  };
 
 let sideNum = 0
 let teamCounter = 2;
-
 
 let timeLimit = 5
 let wordLimit = 30
@@ -12,7 +22,6 @@ let teams = new Map()
 
 let wordNum = 0
 let wordsIndex = 0
-
 
 let wordsEnd = []
 
@@ -118,6 +127,8 @@ window.addEventListener(`load`, function () {
 })
 
 
+
+
 // Teams
 function addTeam() {
     if (teamCounter < 6) {
@@ -132,7 +143,7 @@ function addTeam() {
         inputDiv.innerHTML = strInnerHtml
         
         document.getElementById(`teams-input-container`).appendChild(inputDiv)
-        let buttonRemoveTeam = document.getElementById("button-remove-team" + teamCounter)
+        let buttonRemoveTeam = document.getElementById(`button-remove-team${teamCounter}`)
         buttonRemoveTeam.addEventListener("click", function() {removeTeam(this)}, false)
         teamCounter += 1;
     }
@@ -150,6 +161,7 @@ function removeTeam(element) {
     }
     teamCounter -= 1;
 }
+
 function checkTeam() {
     teams = new Map()
     let teamNames = []
@@ -380,6 +392,7 @@ function updateTeams() {
         }
         if (scoreMax != 0 && scoreMax >= wordLimit) {
             alert(`Победила команда ${teams.get(teamMaxKey)[0]}`)
+            
         }
     }
     teamNum = (1 + teamNum) % teams.size

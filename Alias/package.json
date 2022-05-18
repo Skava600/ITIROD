@@ -1,0 +1,27 @@
+{
+  "name": "alias-app",
+  "version": "1.0.0",
+  "scripts": {
+    "compile": "webpack --config webpack.config.js",
+    "start": "webpack serve",
+    "build": "webpack build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "firebase": "^9.8.1",
+    "firebaseui": "^6.0.1"
+  },
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0"
+  },
+  "description": "_The player's goal is to explain as many words as possible to each other before the time runs out._",
+  "main": "webpack.config.js",
+  "author": "",
+  "license": "ISC"
+}

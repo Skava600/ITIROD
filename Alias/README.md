@@ -12,6 +12,9 @@ _The player's goal is to explain as many words as possible to each other before 
 * SCORE POINTS! Guess the words correctly and score points.
 * BECOME THE WINNER! The first team to reach the victory score is crowned the winner!
 
+### Hosting
+https://alias-game-22902.web.app
+
 ### WireFrame
 
 * https://www.figma.com/file/IUC9sUpw5On56B32F1Df80/Diagram---Alias?node-id=0%3A1
