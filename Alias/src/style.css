@@ -203,11 +203,8 @@
     align-items: center;
     justify-content: center;
   }
-<<<<<<< HEAD
   .center-card-container .span-end {
-=======
-  .center-card-container .container-text {
->>>>>>> 6d820d5bbe4f8a54825f7f28a74e7c4aa263cc16
+
     height: 4em;
     width: 4em;
     min-height: 4em;
