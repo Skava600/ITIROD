@@ -1,8 +1,18 @@
 import wordsPack, {dices, teamPlaceholders} from "./data.js"
+import { MainMenu } from "./components/main-menu.js";
+import { TeamsTab } from "./components/teams-tab.js";
+import { SettingsTab } from "./components/settings-tab.js";
+import { WordsTab } from "./components/words-tab.js";
+import { GameTab } from "./components/game-tab.js";
+import { EndTab } from "./components/end-tab.js";
+import { LeaderboardTab } from "./components/Leaderboard-tab.js";
+import { Login } from "./components/login.js";
+import { RulesTab, RulesButton } from "./components/rules.js";
 import "./styles/rules.css";
 import "./styles/settings.css";
 import "./styles/teams.css";
 import "./styles/themes.css";
+import "./styles/login.css";
 import "./style.css";
 let user = {
     id: "",
@@ -28,68 +38,58 @@ let wordsEnd = []
 let scoreNum = 0
 
 window.addEventListener(`load`, function () {
-    loadWords()
+
     // Theme switch
     document.getElementById(`button-header`).addEventListener(`click`, function () {
          document.documentElement.className = document.documentElement.className === `theme-green` ? `theme-dark` : `theme-green`
     })
 
+   
+    // Leaderboard
+
+    // End
+   
+})
+
+const mainContainer = document.getElementById("main-card");
+
+const RenderLogin = () => {
+    mainContainer.innerHTML = Login();
+}
+const RenderNavMenu = () => {
+    mainContainer.innerHTML = MainMenu();
+   
+    if (use)
     // Update content && Color onclick navbar
     document.getElementById(`teams-li`).addEventListener(`click`, function () {
-        onclickUpdateState(`.nav-li`, `teams-li`, `li-color-passive`, `li-color-active`)
-        onclickUpdateState(`.tab`, `teams-tab`, `display-none`, `display`)
+        RenderTeamsMenu();
     })
     document.getElementById(`settings-li`).addEventListener(`click`, function () {
-        onclickUpdateState(`.nav-li`, `settings-li`, `li-color-passive`, `li-color-active`)
-        onclickUpdateState(`.tab`, `settings-tab`, `display-none`, `display`)
+       RenderSettingsMenu();
     })
     document.getElementById(`words-li`).addEventListener(`click`, function () {
-        onclickUpdateState(`.nav-li`, `words-li`, `li-color-passive`, `li-color-active`)
-        onclickUpdateState(`.tab`, `words-tab`, `display-none`, `display`)
+        RenderWordsMenu();
     })
-
-    // Teams
-    document.getElementById(`button-teams-add`).addEventListener(`click`, addTeam)
-    // Settings
-    document.getElementById(`button-time-sub`).addEventListener(`click`, function () {
-        changeTimeCounter(false)
-    })
-    document.getElementById(`button-time-add`).addEventListener(`click`, function () {
-        changeTimeCounter(true)
-    })
-    document.getElementById(`button-words-sub`).addEventListener(`click`, function () {
-        changeWordCounter(false)
-    })
-    document.getElementById(`button-words-add`).addEventListener(`click`, function () {
-        changeWordCounter(true)
-    })
-    // Words
-    document.getElementById(`button-words-left`).addEventListener(`click`, function () {
-        switchWords(false)
-    })
-    document.getElementById(`button-words-right`).addEventListener(`click`, function () {
-        switchWords(true)
-    })
-
     // Rules || Yes   Start || No
     document.getElementById(`button-top`).addEventListener(`click`, function () {
         if (sideNum == 0) {
-            getSide(1, `rules-side`, `rotateY(180deg)`)
+            getSide(1, `rules-side`, `rotateY(180deg)`, RenderRules)
             document.getElementById(`span-top`).innerHTML = `Menu`
         }
         else if (sideNum == 1){
-            getSide(0, `main-side`, `rotateY(180deg)`)
+            getSide(0, `main-side`, `rotateY(180deg)`, RenderNavMenu)
             document.getElementById(`span-top`).innerHTML = `Rules`
         }
         else {
             getNextWord(`Yes`)
         }
     })
+
     document.getElementById(`button-bottom`).addEventListener(`click`, function () {
         if (sideNum < 2 && checkTeam()) {
+            
+            getSide(2, `score-side`, `rotateY(180deg)`, RenderLeaderBoard)
             loadLeaderboard()
-            getSide(2, `score-side`, `rotateY(180deg)`)
-
             document.querySelectorAll(`.border-button`).forEach(element => {
                 element.style.opacity = 0
                 setTimeout(() => {
@@ -103,32 +103,80 @@ window.addEventListener(`load`, function () {
         }
 
     })
+    RenderTeamsMenu()
+  };
 
-    // Rules
+  const RenderTeamsMenu = () => {
+
+    let mainSide = document.getElementById("main-tab");
+
+    mainSide.innerHTML = TeamsTab();
+      // Teams
+      document.getElementById(`button-teams-add`).addEventListener(`click`, addTeam)
+  }
+
+  const RenderSettingsMenu = () => {
+    let mainSide = document.getElementById("main-tab");
+    mainSide.innerHTML = SettingsTab();
+    document.getElementById(`button-time-sub`).addEventListener(`click`, function () {
+        changeTimeCounter(false)
+    })
+    document.getElementById(`button-time-add`).addEventListener(`click`, function () {
+        changeTimeCounter(true)
+    })
+    document.getElementById(`button-words-sub`).addEventListener(`click`, function () {
+        changeWordCounter(false)
+    })
+    document.getElementById(`button-words-add`).addEventListener(`click`, function () {
+        changeWordCounter(true)
+    })
+  }
+
+  const RenderWordsMenu = () => {
+    let mainSide = document.getElementById("main-tab");
+    mainSide.innerHTML = WordsTab();
+    loadWords()
+    document.getElementById(`button-words-left`).addEventListener(`click`, function () {
+        switchWords(false)
+    })
+    document.getElementById(`button-words-right`).addEventListener(`click`, function () {
+        switchWords(true)
+    })
+  }
+
+  const RenderRules = () => {
+    mainContainer.innerHTML = RulesTab()
     document.getElementById(`button-rules-back`).addEventListener(`click`, function () {
-        getSide(0, `main-side`, `rotateY(180deg)`)
+        getSide(0, `main-side`, `rotateY(180deg)`, RenderNavMenu)
         document.getElementById(`span-top`).innerHTML = `Rules`
     })
-    // Leaderboard
-    document.getElementById(`button-leaderboard`).addEventListener(`click`, function () {
+  }
+
+  const RenderLeaderBoard = () => {
+      mainContainer.innerHTML = LeaderboardTab();
+      document.getElementById(`button-leaderboard`).addEventListener(`click`, function () {
         document.getElementById(`h2-time`).innerHTML = timeLimit.toString()
-        document.getElementById(`h2-points`).innerHTML = `0`
+        document.getElementById(`h2-points`).innerHTML = `0`      
+        getSide(3, `game-side`, `rotateY(180deg)`, RenderGame)
         loadGame()
-        getSide(3, `game-side`, `rotateY(180deg)`)
         gameTimer()
     })
-    // End
-    document.getElementById(`button-end`).addEventListener(`click`, function () {
+  }
+
+  const RenderGame = () => {
+      mainContainer.innerHTML = GameTab()
+  }
+
+  const RenderEnd = () => {
+      mainContainer.innerHTML = EndTab()
+      document.getElementById(`button-end`).addEventListener(`click`, function () {
+       
+        getSide(2, `score-side`, `rotateY(180deg)`, RenderLeaderBoard)
         updateTeams()
-        getSide(2, `score-side`, `rotateY(180deg)`)
         scoreNum = 0
         document.getElementById(`h2-points`).innerHTML = scoreNum.toString()
     })
-})
-
-
-
-
+  }
 // Teams
 function addTeam() {
     if (teamCounter < 6) {
@@ -148,6 +196,7 @@ function addTeam() {
         teamCounter += 1;
     }
 }
+
 function removeTeam(element) {
     element.parentNode.remove()
 
@@ -163,12 +212,13 @@ function removeTeam(element) {
 }
 
 function checkTeam() {
-    teams = new Map()
+    
     let teamNames = []
     document.getElementsByName(`input-team`).forEach(element => {
         teamNames.push(element.value)
     })
-
+    if (teamNames.length != 0)
+        teams = new Map()
     for (let i = 0; i < teamNames.length; i++) {
         name = teamNames[i]
         if (name.length < 3) {
@@ -331,8 +381,8 @@ function gameTimer() {
     setTimeout(() => {
         clearInterval(timerId)
         getNextWord(`None`)
+        getSide(4, `end-side`, `rotateY(180deg)`, RenderEnd)
         loadEnd()
-        getSide(4, `end-side`, `rotateY(180deg)`)
     }, (timeLimit + 1) * 1000);
 }
 function getNextWord(result) {
@@ -410,11 +460,15 @@ function onclickUpdateState(selectedGroupClass, selectedItemId, classRemove, cla
     selectedItem.classList.remove(classRemove)
     selectedItem.classList.add(classAdd)
 }
-function getSide(toSide, sideId, transform) {
+function getSide(toSide, sideId, transform, action = () => {}) {
     document.getElementById(`main-card`).style.transform = transform
+    action();
     setTimeout(() => {
-        onclickUpdateState(`.side`, sideId, `display-none`, `display`)
+        //onclickUpdateState(`.side`, sideId, `display-none`, `display`)
+        
         document.getElementById(`main-card`).style.transform = `rotateY(0deg)`
         sideNum = toSide;
     }, 150)
 }
+
+RenderLogin()

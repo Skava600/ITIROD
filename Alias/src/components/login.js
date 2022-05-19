@@ -1,5 +1,5 @@
 export const Login = () => `
-<div id="modal-container" class="show">
+<div id="login-side" class="side display">
     <div id="modal">
         <h2>Please, login to your account</h2>
         <div class="underline"></div>

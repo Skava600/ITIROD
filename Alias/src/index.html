@@ -25,201 +25,21 @@
       <!--Top Button-->
       <div class="border-row border-top-radius">
           <button id="button-top" class="border-button border-radius-top">
-              <span id="span-top">Rules</span>
+              <span class="border-button-span" id="span-top">Rules</span>
           </button>
       </div>
 
-      <!--Center Card-->
-      <div class="center-row">
-          <div id="main-card" class="main-card">
-              <!--Main Side-->
-              <div id="main-side" class="side display">
-                  <!--Teams / Settings / Words-->
-                  <nav class="top-card-container">
-                      <ul class="nav-ul">
-                          <li id="teams-li" class="nav-li">
-                              <button id="button-teams" class="nav-button button-color-active">
-                                  <i class="fas fa-users"></i>
-                                  <span>Teams</span>
-                              </button>
-                          </li>
-                          <li id="settings-li" class="nav-li">
-                              <button id="button-settings" class="nav-button button-color-passive">
-                                  <i class="fas fa-cogs"></i>
-                                  <span>Settings</span>
-                              </button>
-                          </li>
-                          <li id="words-li" class="nav-li">
-                              <button id="button-words" class="nav-button button-color-passive">
-                                  <i class="fas fa-book"></i>
-                                  <span>Words</span>
-                              </button>
-                          </li>
-                      </ul>
-                  </nav>
+        <!--Center Card-->
+        <div class="center-row">
+            <div id="main-card" class="main-card">
 
-                  <!--Teams Tab-->
-                  <div id="teams-tab" class="tab display fill">
-                      <div id="teams-input-container" class="center-card-container">
-                          <div class="teams-input">
-                              <i class="fas fa-dice-one"></i>
-                              <input name="input-team" placeholder="Team A">
-                              <i class="fas fa-times"></i>
-                          </div>
-                          <div class="teams-input">
-                              <i class="fas fa-dice-two"></i>
-                              <input name="input-team" placeholder="Team B">
-                              <i class="fas fa-times"></i>
-                          </div>
-                      </div>
-                      <div class="bottom-card-container">
-                          <button id="button-teams-add" class="bottom-button">
-                              <span>Add New Team</span>
-                          </button>
-                      </div>
-                  </div>
-
-                  <!--Settings Tab-->
-                  <div id="settings-tab" class="tab settings-container display-none">
-                      <!--Time Row-->
-                      <div class="settings-row">
-                          <div class="settings-col-info">
-                              <h2>Round Time:</h2>
-                              <h3>For which you must guess the words</h3>
-                              <div class="settings-row-buttons">
-                                  <button id="button-time-sub" class="settings-button margin-right">-30 sec.</button>
-                                  <button id="button-time-add" class="settings-button">+30 sec.</button>
-                              </div>
-                          </div>
-                          <div id="settings-col-time" class="settings-col-value">
-                              <h2 id="minutes-counter">1</h2>
-                              <h3 id="seconds-counter">:30</h3>
-                              <h3>min</h3>
-                          </div>
-                      </div>
-                      <!--Time Row-->
-                      <div class="settings-row">
-                          <div class="settings-col-info">
-                              <h2>Word Limit:</h2>
-                              <h3>Necessary for victor</h3>
-                              <div class="settings-row-buttons">
-                                  <button id="button-words-sub" class="settings-button margin-right">-10 words.</button>
-                                  <button id="button-words-add" class="settings-button">+10 words.</button>
-                              </div>
-                          </div>
-                          <div class="settings-col-value">
-                              <h2 id="words-counter">30</h2>
-                          </div>
-                      </div>
-                  </div>
-
-                    <!--Words Tab -->
-                    <div id="words-tab" class="tab center-card-container flex-direction-row display-none">
-                        <div class="words-col-border">
-                            <button id="button-words-left">
-                                <i class="fas fa-arrow-left"></i>
-                            </button>
-
-                        </div>
-                        <div class="words-col-center">
-                            <div id="words-card" class="words-card">
-                                <h1 id="h1-words-topic"></h1>
-                                <p id="p-words-description"></p>
-                            </div>
-                        </div>
-                        <div class="words-col-border">
-                            <button id="button-words-right">
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                </div>
             </div>
-
-              <!--Rules Side -->
-              <div id="rules-side" class="side display-none">
-                  <div class="top-card-container">
-                      <h1>How to play Alias<hr></h1>
-                  </div>
-                  <div class="center-card-container">
-                      <div class="rules-container">
-                          <p>
-                              In "Alias" you have to say things in "other words". The idea is to explain words using synonyms,
-                              opposites or clues so that your team mates guess as many words from the card as possible before
-                              the sand in the sand timer runs out.
-                          </p>
-                          <h2>How to explain</h2>
-                          <p>
-                              When explaining, you cannot use any part of the word on the card, nor a derivative of it.
-                              For example, you cannot explain the word "handbag" by saying "a small bag women usually carry",
-                              or the word "balloon" by saying "a ball filled with air" since balloon and ball are derived from the same word.
-                              You could, however, say "a colourful object filled with air".
-                              If the word has two parts, for example "tape recorder", and someone guesses "tape player",
-                              you can then use the first part and help your team by saying "the tape is right but use another word for player".
-                              You can use opposites. The word "big" can be explained as "the opposite of small".
-                          </p>
-                          <h2>Mistakes and skipping</h2>
-                          <p>
-                              If the explaining player makes a mistake, for example says a part of the word in the card,
-                              the word will not be accepted and the team has to move one space backwards.
-                              For example, if a team has guessed 6 words, but the explainer has made two mistakes (6 - 2), the team gets to move only 4 spaces forward.
-                              The other teams must therefore listen closely when the team in turn is explaining.
-                              If the word seems too difficult, you can skip it, but remember that then you also have to move one space backwards.
-                              However, this is sometimes a good idea since it may save a lot of time, during which you can explain new words.
-                          </p>
-                      </div>
-                  </div>
-                  <div class="bottom-card-container">
-                      <button id="button-rules-back" class="bottom-button">
-                          <span>Got It</span>
-                      </button>
-                  </div>
-              </div>
-
-               <!--Leaderboard Side -->
-               <div id="score-side" class="side display-none">
-                <div class="top-card-container">
-                    <h1>Leaderboard<hr></h1>
-                </div>
-                <div class="center-card-container justify-content-center">
-                    <ul id="ul-teams" class="game-ul">
-                    </ul>
-                </div>
-                <div class="bottom-card-container">
-                    <button id="button-leaderboard" class="bottom-button">
-                        <span id="span-leaderboard"></span>
-                    </button>
-                </div>
-            </div>
-            
-                <!--Game Side-->
-                <div id="game-side" class="side display-none">
-                    <article id="article-word" class="card-word">
-                        Word
-                    </article>
-                </div>
-
-              <!--End Side-->
-              <div id="end-side" class="side display-none">
-                  <div class="top-card-container">
-                      <h1>Round Over!<hr></h1>
-                  </div>
-                  <div class="center-card-container justify-content-flex-start">
-                      <span id="span-end"></span>
-                      <ul id="ul-end" class="game-ul"></ul>
-                  </div>
-                  <div class="bottom-card-container">
-                      <button id="button-end" class="bottom-button">
-                          <span>To Leaderboard</span>
-                      </button>
-                  </div>
-              </div>
-          </div>
       </div>
 
       <!--Bottom Button-->
       <div class="border-row border-bottom-radius align-items-flex-end">
           <button id="button-bottom" class="border-button border-bottom-radius" >
-              <span id="span-bottom">Start</span>
+              <span class="border-button-span" id="span-bottom">Start</span>
           </button>
       </div>
   </main>
