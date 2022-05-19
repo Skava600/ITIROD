@@ -203,7 +203,7 @@
     align-items: center;
     justify-content: center;
   }
-  .center-card-container span {
+  .center-card-container .container-text {
     height: 4em;
     width: 4em;
     min-height: 4em;

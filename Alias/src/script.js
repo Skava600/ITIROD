@@ -14,7 +14,7 @@ let user = {
 let sideNum = 0
 let teamCounter = 2;
 
-let timeLimit = 5
+let timeLimit = 90
 let wordLimit = 30
 
 let teamNum = 0
