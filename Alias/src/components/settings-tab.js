@@ -30,4 +30,9 @@ export const SettingsTab = () => `
             <h2 id="words-counter">30</h2>
         </div>
     </div>
+    <div class="bottom-card-container">
+    <button id="button-logout" class="bottom-button">
+        <span>LogOut</span>
+    </button>
+</div>
 </div>`

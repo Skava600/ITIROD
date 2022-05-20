@@ -35,7 +35,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
+const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const db = getFirestore(app);
 
@@ -102,6 +102,7 @@ export const fetchGameData = async (id, setData) => {
       setData(doc.data().savedGameData);
     }
   });
+  
 };
 
 export const backUpGameData = async (userData, gameData) => {
@@ -113,5 +114,6 @@ export const backUpGameData = async (userData, gameData) => {
 
 export const deleteSavedGame = async (userData) => {
   const docRef = doc(db, "users", userData.id);
+  console.log(userData.id)
   await setDoc(docRef, { savedGameData: null });
 };

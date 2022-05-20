@@ -1,7 +1,7 @@
 export const Login = () => `
 <div id="login-side" class="side display">
     <div id="modal">
-        <h2>Please, login to your account</h2>
+        <h2 class="login-h2">Please, login to your account</h2>
         <div class="underline"></div>
         <div class="inputs">
             <input type="email" placeholder="email" id="email">

@@ -8,29 +8,40 @@ import { EndTab } from "./components/end-tab.js";
 import { LeaderboardTab } from "./components/Leaderboard-tab.js";
 import { Login } from "./components/login.js";
 import { RulesTab, RulesButton } from "./components/rules.js";
+import { 
+    signInWithEmail,
+    signUpWithEmail,
+    monitorAuthState,
+    redirectGoogleSignUp,
+    signOutFromApp,
+    fetchGameData,
+    backUpGameData,
+    deleteSavedGame
+} from "./server.js"
 import "./styles/rules.css";
 import "./styles/settings.css";
 import "./styles/teams.css";
 import "./styles/themes.css";
 import "./styles/login.css";
 import "./style.css";
-let user = {
+let userData = {
     id: "",
     name: "",
     hasSavedGame: false,
     isSignedIn: false,
   };
 
+
+let gameData = {
+    teams: [],
+    teamNum: 0,
+    timeLimit: 90,
+    wordLimit: 30,
+    wordNum: 0,
+    wordsIndex: 0
+}
 let sideNum = 0
 let teamCounter = 2;
-
-let timeLimit = 90
-let wordLimit = 30
-
-let teamNum = 0
-let teams = new Map()
-
-let wordNum = 0
 let wordsIndex = 0
 
 let wordsEnd = []
@@ -44,22 +55,74 @@ window.addEventListener(`load`, function () {
          document.documentElement.className = document.documentElement.className === `theme-green` ? `theme-dark` : `theme-green`
     })
 
-   
+   // Rules || Yes   Start || No
+   addOnClick(`button-top`, function () {
+    if (sideNum == 0) {
+        getSide(1, `rules-side`, `rotateY(180deg)`, RenderRules)
+        document.getElementById(`span-top`).innerHTML = `Menu`
+    }
+    else if (sideNum == 1){
+        getSide(0, `main-side`, `rotateY(180deg)`, RenderNavMenu)
+        document.getElementById(`span-top`).innerHTML = `Rules`
+    }
+    else {
+        getNextWord(`Yes`)
+    }
+})
+
+addOnClick(`button-bottom`, function () {
+    if (sideNum < 2 && checkTeam()) {
+        
+        getSide(2, `score-side`, `rotateY(180deg)`, RenderLeaderBoard)
+        loadLeaderboard()
+        document.querySelectorAll(`.border-button`).forEach(element => {
+            element.style.opacity = 0
+            setTimeout(() => {
+                element.classList.add(`display-none`)
+            }, 300)
+        })
+
+    }
+    else {
+        getNextWord(`No`)
+    }
+
+})
     // Leaderboard
 
     // End
    
 })
 
+const setUserData = (newData) => {
+    userData = JSON.parse(JSON.stringify(newData));
+  };
+
+  const setGameData = (newData) => {
+    gameData = JSON.parse(JSON.stringify(newData));
+    loadLeaderboard()
+  };
+
+const addOnClick = (id, callback) => {
+    document.getElementById(id).removeEventListener("click", callback);
+    document.getElementById(id).addEventListener("click", callback);
+  };
+
 const mainContainer = document.getElementById("main-card");
 
 const RenderLogin = () => {
+    toggleButtons("none");
     mainContainer.innerHTML = Login();
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    addOnClick("sign-in", ()=>signInWithEmail(email.value, password.value))
+    addOnClick("sign-up", ()=>signUpWithEmail(email.value, password.value))
+    addOnClick("sign-in-with-google", () => redirectGoogleSignUp());
 }
 const RenderNavMenu = () => {
+    toggleButtons("block");
     mainContainer.innerHTML = MainMenu();
-   
-    if (use)
+    
     // Update content && Color onclick navbar
     document.getElementById(`teams-li`).addEventListener(`click`, function () {
         RenderTeamsMenu();
@@ -70,39 +133,8 @@ const RenderNavMenu = () => {
     document.getElementById(`words-li`).addEventListener(`click`, function () {
         RenderWordsMenu();
     })
-    // Rules || Yes   Start || No
-    document.getElementById(`button-top`).addEventListener(`click`, function () {
-        if (sideNum == 0) {
-            getSide(1, `rules-side`, `rotateY(180deg)`, RenderRules)
-            document.getElementById(`span-top`).innerHTML = `Menu`
-        }
-        else if (sideNum == 1){
-            getSide(0, `main-side`, `rotateY(180deg)`, RenderNavMenu)
-            document.getElementById(`span-top`).innerHTML = `Rules`
-        }
-        else {
-            getNextWord(`Yes`)
-        }
-    })
-
-    document.getElementById(`button-bottom`).addEventListener(`click`, function () {
-        if (sideNum < 2 && checkTeam()) {
-            
-            getSide(2, `score-side`, `rotateY(180deg)`, RenderLeaderBoard)
-            loadLeaderboard()
-            document.querySelectorAll(`.border-button`).forEach(element => {
-                element.style.opacity = 0
-                setTimeout(() => {
-                    element.classList.add(`display-none`)
-                }, 300)
-            })
-
-        }
-        else {
-            getNextWord(`No`)
-        }
-
-    })
+    
+    document.getElementById("span-bottom").textContent = "Start"
     RenderTeamsMenu()
   };
 
@@ -118,18 +150,29 @@ const RenderNavMenu = () => {
   const RenderSettingsMenu = () => {
     let mainSide = document.getElementById("main-tab");
     mainSide.innerHTML = SettingsTab();
-    document.getElementById(`button-time-sub`).addEventListener(`click`, function () {
+    addOnClick(`button-time-sub`, function () {
         changeTimeCounter(false)
     })
-    document.getElementById(`button-time-add`).addEventListener(`click`, function () {
+    addOnClick(`button-time-add`, function () {
         changeTimeCounter(true)
     })
-    document.getElementById(`button-words-sub`).addEventListener(`click`, function () {
+    addOnClick(`button-words-sub`, function () {
         changeWordCounter(false)
     })
-    document.getElementById(`button-words-add`).addEventListener(`click`, function () {
+    addOnClick(`button-words-add`, function () {
         changeWordCounter(true)
     })
+
+    addOnClick(`button-logout`, () => {
+        setUserData({
+            id: "",
+            name: "",
+            hasSavedGame: false,
+            isSignedIn: false,
+          });
+        signOutFromApp();
+        RenderLogin();
+        })       
   }
 
   const RenderWordsMenu = () => {
@@ -155,7 +198,7 @@ const RenderNavMenu = () => {
   const RenderLeaderBoard = () => {
       mainContainer.innerHTML = LeaderboardTab();
       document.getElementById(`button-leaderboard`).addEventListener(`click`, function () {
-        document.getElementById(`h2-time`).innerHTML = timeLimit.toString()
+        document.getElementById(`h2-time`).innerHTML = gameData.timeLimit.toString()
         document.getElementById(`h2-points`).innerHTML = `0`      
         getSide(3, `game-side`, `rotateY(180deg)`, RenderGame)
         loadGame()
@@ -165,13 +208,12 @@ const RenderNavMenu = () => {
 
   const RenderGame = () => {
       mainContainer.innerHTML = GameTab()
+      toggleButtons("block");
   }
 
   const RenderEnd = () => {
       mainContainer.innerHTML = EndTab()
-      document.getElementById(`button-end`).addEventListener(`click`, function () {
-       
-        getSide(2, `score-side`, `rotateY(180deg)`, RenderLeaderBoard)
+      document.getElementById(`button-end`).addEventListener(`click`, function () {   
         updateTeams()
         scoreNum = 0
         document.getElementById(`h2-points`).innerHTML = scoreNum.toString()
@@ -218,7 +260,7 @@ function checkTeam() {
         teamNames.push(element.value)
     })
     if (teamNames.length != 0)
-        teams = new Map()
+        gameData.teams = []
     for (let i = 0; i < teamNames.length; i++) {
         name = teamNames[i]
         if (name.length < 3) {
@@ -233,33 +275,33 @@ function checkTeam() {
             alert(`Team name: only english letters allowed!`)
             return false
         }
-        teams.set(i, [name, 0])
+        gameData.teams.push({name:name, score:0})
     }
     return true
 }
 // Settings
 function changeTimeCounter(isAdd) {
-    if (timeLimit < 300 && isAdd) {
-        timeLimit += 30
+    if (gameData.timeLimit < 300 && isAdd) {
+        gameData.timeLimit += 30
     }
-    else if (timeLimit > 30 && !isAdd) {
-        timeLimit -= 30
+    else if (gameData.timeLimit > 30 && !isAdd) {
+        gameData.timeLimit -= 30
     }
     else return
 
-    document.getElementById(`minutes-counter`).innerHTML = Math.trunc(timeLimit / 60).toString()
-    document.getElementById(`seconds-counter`).innerHTML =  timeLimit % 60 == 0 ? ':00' : ':' + (timeLimit % 60).toString()
+    document.getElementById(`minutes-counter`).innerHTML = Math.trunc(gameData.timeLimit / 60).toString()
+    document.getElementById(`seconds-counter`).innerHTML =  gameData.timeLimit % 60 == 0 ? ':00' : ':' + (gameData.timeLimit % 60).toString()
 }
 function changeWordCounter(isAdd) {
-    if (wordLimit < 200 && isAdd) {
-        wordLimit += 10
+    if (gameData.wordLimit < 200 && isAdd) {
+        gameData.wordLimit += 10
     }
-    else if (wordLimit > 10 && !isAdd) {
-        wordLimit -= 10
+    else if (gameData.wordLimit > 10 && !isAdd) {
+        gameData.wordLimit -= 10
     }
     else return
 
-    document.getElementById(`words-counter`).innerHTML = wordLimit.toString()
+    document.getElementById(`words-counter`).innerHTML = gameData.wordLimit.toString()
 }
 // Words
 function switchWords(isRight) {
@@ -267,6 +309,14 @@ function switchWords(isRight) {
     animationWords(isRight)
     loadWords()
 }
+
+function toggleButtons(style){
+    var buttonTop = document.getElementById("button-top");
+    var buttonBottom = document.getElementById("button-bottom");
+    buttonTop.style.display = style;
+    buttonBottom.style.display = style;
+  }
+
 function animationWords(isRight) {
     let container = document.getElementById(`words-card`)
     container.style.transition = `transform 0.5s`
@@ -292,27 +342,27 @@ function loadWords() {
 function loadLeaderboard() {
     let container = document.getElementById(`ul-teams`)
     container.innerHTML = ""
-    for (let team of teams){
+    for (let team of gameData.teams){
         let strInnerHtml =
             `
-            <h2>Team '${team[1][0]}'</h2>
-            <h3>${team[1][1]}</h3>
+            <h2>Team '${team.name}'</h2>
+            <h3>${team.score}</h3>
             `
         let li = document.createElement(`li`)
         li.innerHTML = strInnerHtml
         container.appendChild(li)
     }
 
-    document.getElementById(`span-leaderboard`).innerHTML = `Turn '${teams.get(teamNum)[0]}'`
+    document.getElementById(`span-leaderboard`).innerHTML = `Turn '${gameData.teams[gameData.teamNum].name}'`
 }
 function loadGame() {
-    document.getElementById(`article-word`).innerHTML = wordsPack.get(wordsIndex)[1][wordNum]
-    if (wordNum + 1 == wordsPack.get(wordsIndex)[1].length) {
+    document.getElementById(`article-word`).innerHTML = wordsPack.get(wordsIndex)[1][gameData.wordNum]
+    if (gameData.wordNum + 1 == wordsPack.get(wordsIndex)[1].length) {
         wordsPack.get(wordsIndex)[1].sort(() => Math.random() - 0.5);
-        wordNum = 0;
+        gameData.wordNum = 0;
     }
     else {
-        wordNum += 1
+        gameData.wordNum += 1
     }
 
     document.getElementById(`span-top`).innerHTML = `Yes`
@@ -370,7 +420,7 @@ function loadEnd() {
 
 // Game Logic
 function gameTimer() {
-    let seconds = timeLimit - 1
+    let seconds = gameData.timeLimit - 1
     let container = document.getElementById(`h2-time`)
 
     let timerId = setInterval(() => {
@@ -383,23 +433,23 @@ function gameTimer() {
         getNextWord(`None`)
         getSide(4, `end-side`, `rotateY(180deg)`, RenderEnd)
         loadEnd()
-    }, (timeLimit + 1) * 1000);
+    }, (gameData.timeLimit + 1) * 1000);
 }
 function getNextWord(result) {
     scoreNum = result === `Yes` ? scoreNum + 1 : result === `No` ? scoreNum - 1 : scoreNum
     document.getElementById(`h2-points`).innerHTML = scoreNum.toString()
-    wordNum += 1
-    wordsEnd.push([wordsPack.get(wordsIndex)[1][wordNum], result])
-    if (wordNum + 1 == wordsPack.get(wordsIndex)[1].length) {
+    gameData.wordNum += 1
+    wordsEnd.push([wordsPack.get(wordsIndex)[1][gameData.wordNum], result])
+    if (gameData.wordNum + 1 == wordsPack.get(wordsIndex)[1].length) {
         wordsPack.get(wordsIndex)[1].sort(() => Math.random() - 0.5);
-        wordNum = 0;
+        gameData.wordNum = 0;
     }
     let container = document.getElementById(`article-word`)
     //container.style.transform = result === `Yes` ? `rotate(360deg)` : `rotate(-360deg)`
     container.style.opacity = 0
 
     setTimeout(() => {
-        container.innerHTML = wordsPack.get(wordsIndex)[1][wordNum]
+        container.innerHTML = wordsPack.get(wordsIndex)[1][gameData.wordNum]
         container.style.opacity = 1
     }, 300)
 }
@@ -429,37 +479,39 @@ function updateScore() {
 }
 function updateTeams() {
     updateScore()
-    teams.get(teamNum)[1] += scoreNum
+    backUpGameData(userData, gameData)
+    gameData.teams[gameData.teamNum].score += scoreNum
 
-    if (teamNum == teams.size - 1) {
+    if (gameData.teamNum == gameData.teams.length - 1) {
         let teamMaxKey = 0
         let scoreMax = 0
-        for (let [key, value] of teams) {
-            if (scoreMax < value[1]) {
-                scoreMax = value[1]
-                teamMaxKey = key
+        for (let i= 0; i < gameData.teams.length;i++ ) {
+            if (scoreMax < gameData.teams[i].score) {
+                scoreMax =  gameData.teams[i].score
+                teamMaxKey = i
             }
         }
-        if (scoreMax != 0 && scoreMax >= wordLimit) {
-            alert(`Победила команда ${teams.get(teamMaxKey)[0]}`)
-            
+        if (scoreMax != 0 && scoreMax >= gameData.wordLimit) {
+            alert(`Победила команда ${gameData.teams[teamMaxKey].name}`)   
+            deleteSavedGame(userData)    
+            getSide(0, `main-side`, `rotateY(180deg)`, RenderNavMenu)
+            document.getElementById(`span-top`).innerHTML = `Rules`
+            var buttonTop = document.getElementById("button-top");
+            var buttonBottom = document.getElementById("button-bottom");
+            buttonTop.classList.remove("display-none")
+            buttonTop.style.opacity = 1
+            buttonBottom.classList.remove("display-none")
+            buttonBottom.style.opacity = 1
+            return
         }
     }
-    teamNum = (1 + teamNum) % teams.size
+    gameData.teamNum = (1 + gameData.teamNum) % gameData.teams.length
     wordsEnd = []
+    getSide(2, `score-side`, `rotateY(180deg)`, RenderLeaderBoard)
     loadLeaderboard()
+    
 }
 
-function onclickUpdateState(selectedGroupClass, selectedItemId, classRemove, classAdd) {
-    document.querySelectorAll(selectedGroupClass).forEach(element => {
-        element.classList.remove(classAdd)
-        element.classList.add(classRemove)
-    })
-
-    let selectedItem = document.getElementById(selectedItemId)
-    selectedItem.classList.remove(classRemove)
-    selectedItem.classList.add(classAdd)
-}
 function getSide(toSide, sideId, transform, action = () => {}) {
     document.getElementById(`main-card`).style.transform = transform
     action();
@@ -471,4 +523,27 @@ function getSide(toSide, sideId, transform, action = () => {}) {
     }, 150)
 }
 
+const userSaved = () =>
+{
+    if (userData.isSignedIn) {
+        if (!userData.hasSavedGame)
+        {
+            RenderNavMenu();
+        }
+        else
+        {
+            fetchGameData(userData.id, setGameData)
+            getSide(2, `score-side`, `rotateY(180deg)`, RenderLeaderBoard)
+            
+            document.querySelectorAll(`.border-button`).forEach(element => {
+                element.style.opacity = 0
+                setTimeout(() => {
+                    element.classList.add(`display-none`)
+                }, 300)
+            })
+        }
+    } 
+}
+
 RenderLogin()
+monitorAuthState(setUserData, () => userSaved())
