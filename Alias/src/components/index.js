@@ -1,0 +1,9 @@
+export { MainMenu } from "./main-menu.js";
+export { GameTab } from "./game-tab.js";
+export { LeaderboardTab } from "./leaderboard-tab.js";
+export { Login } from "./login.js";
+export { RulesTab } from "./rules.js";
+export { SettingsTab } from "./settings-tab.js";
+export { TeamsTab } from "./teams-tab.js";
+export { WordsTab } from "./words-tab.js";
+export { EndTab } from "./end-tab.js";

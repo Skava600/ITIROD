@@ -1,0 +1,59 @@
+.settings-container {
+  width: 100%;
+  height: 75%;
+  color: var(--secondary-color);
+}
+
+.settings-row {
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2em 0 2em;
+}
+.settings-row h2 {
+  font-size: 1.5em;
+}
+.settings-row h3 {
+  align-self: flex-end;
+  font-size: 1.17em;
+  margin-right: 0.25em;
+}
+
+.settings-col-info {
+  flex: 3;
+}
+
+.settings-col-value {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  padding-bottom: 1em;
+}
+
+.settings-row-buttons {
+  display: flex;
+  flex-direction: row;
+  padding-top: 1em;
+}
+
+.settings-button {
+  flex: auto;
+  color: var(--secondary-color);
+  background-color: var(--tertiary-color);
+  border-radius: 5em;
+  min-height: 1.5em;
+  border: none;
+  font-size: 1.25em;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  transition: 0.3s color, 0.3s background-color;
+}
+.settings-button:hover {
+  background-color: var(--secondary-color);
+  color: var(--tertiary-color);
+}
+.settings-button:focus-visible {
+  color: var(--focused-color);
+  border: 1px dashed var(--focused-color);
+}
