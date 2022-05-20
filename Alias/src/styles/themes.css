@@ -1,34 +1,34 @@
 @media (prefers-color-scheme: dark) {
-    .theme-green {
-      --primary-color: #2d333b;
-      --secondary-color: #cdd9e5;
-      --tertiary-color: #1e252b;
-      --background-color: #1c2128;
-      --focused-color: #339BFF;
-    }
-  
-    .theme-dark {
-      --primary-color: #EDF5E1;
-      --secondary-color: #05386B;
-      --tertiary-color: #5CDB95;
-      --background-color: #8EE4AF;
-      --focused-color: #D2691E;
-    }
+  .theme-green {
+    --primary-color: #2d333b;
+    --secondary-color: #cdd9e5;
+    --tertiary-color: #1e252b;
+    --background-color: #1c2128;
+    --focused-color: #339bff;
   }
-  @media (prefers-color-scheme: light) {
-    .theme-green {
-      --primary-color: #EDF5E1;
-      --secondary-color: #05386B;
-      --tertiary-color: #5CDB95;
-      --background-color: #8EE4AF;
-      --focused-color: #33DFFF;
-    }
-  
-    .theme-dark {
-      --primary-color: #2d333b;
-      --secondary-color: #cdd9e5;
-      --tertiary-color: #1e252b;
-      --background-color: #1c2128;
-      --focused-color: #33DFFF;
-    }
+
+  .theme-dark {
+    --primary-color: #edf5e1;
+    --secondary-color: #05386b;
+    --tertiary-color: #5cdb95;
+    --background-color: #8ee4af;
+    --focused-color: #d2691e;
   }
+}
+@media (prefers-color-scheme: light) {
+  .theme-green {
+    --primary-color: #edf5e1;
+    --secondary-color: #05386b;
+    --tertiary-color: #5cdb95;
+    --background-color: #8ee4af;
+    --focused-color: #33dfff;
+  }
+
+  .theme-dark {
+    --primary-color: #2d333b;
+    --secondary-color: #cdd9e5;
+    --tertiary-color: #1e252b;
+    --background-color: #1c2128;
+    --focused-color: #33dfff;
+  }
+}

@@ -1,15 +1,20 @@
-export const EndTab = () => `
-<div id="end-side" class="side display">
-                  <div class="top-card-container">
-                      <h1>Round Over!<hr></h1>
-                  </div>
-                  <div class="center-card-container justify-content-flex-start">
-                      <span class="span-end" id="span-end"></span>
-                      <ul id="ul-end" class="game-ul"></ul>
-                  </div>
-                  <div class="bottom-card-container">
-                      <button id="button-end" class="bottom-button">
-                          <span>To Leaderboard</span>
-                      </button>
-                  </div>
-              </div>`
+export const EndTab = ({ nextPage }) => (
+  <>
+    <div id="end-side" className="side display">
+      <div className="top-card-container">
+        <h1>
+          Round Over!<hr></hr>
+        </h1>
+      </div>
+      <div className="center-card-container justify-content-flex-start">
+        <span className="span-end" id="span-end"></span>
+        <ul id="ul-end" className="game-ul"></ul>
+      </div>
+      <div className="bottom-card-container">
+        <button id="button-end" className="bottom-button" onClick={nextPage}>
+          <span>To Leaderboard</span>
+        </button>
+      </div>
+    </div>
+  </>
+);

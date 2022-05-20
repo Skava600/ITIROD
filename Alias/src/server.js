@@ -30,7 +30,7 @@ const firebaseConfig = {
   storageBucket: "alias-game-22902.appspot.com",
   messagingSenderId: "117503719795",
   appId: "1:117503719795:web:1fc9af7b6d5dfcde6a2d06",
-  measurementId: "G-LSTGZD3CSX"
+  measurementId: "G-LSTGZD3CSX",
 };
 
 // Initialize Firebase
@@ -57,9 +57,10 @@ export const signUpWithEmail = async (loginEmail, loginPassword) => {
   );
 };
 
-export const monitorAuthState = async (setUserData, callback) =>
+export const monitorAuthState = async (callback) =>
   await onAuthStateChanged(auth, (user) => {
     if (user) {
+      console.log(user.displayName);
       const docRef = doc(db, "users", user.uid);
 
       getDoc(docRef)
@@ -70,17 +71,15 @@ export const monitorAuthState = async (setUserData, callback) =>
         })
         .finally(() =>
           getDoc(docRef).then((doc) => {
-            setUserData({
+            callback({
               hasSavedGame: !!doc.data().savedGameData,
               id: user.uid,
               isSignedIn: true,
               name: user.displayName,
             });
-            callback();
           })
         );
     } else {
-      setUserData({});
       callback();
     }
   });
@@ -102,7 +101,6 @@ export const fetchGameData = async (id, setData) => {
       setData(doc.data().savedGameData);
     }
   });
-  
 };
 
 export const backUpGameData = async (userData, gameData) => {
@@ -114,6 +112,6 @@ export const backUpGameData = async (userData, gameData) => {
 
 export const deleteSavedGame = async (userData) => {
   const docRef = doc(db, "users", userData.id);
-  console.log(userData.id)
+  console.log(userData.id);
   await setDoc(docRef, { savedGameData: null });
 };

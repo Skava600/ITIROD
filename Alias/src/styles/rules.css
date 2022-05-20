@@ -1,17 +1,18 @@
 .rules-container {
-    margin: 0em 1em 0em 1em;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .rules-container p, .rules-container h2 {
-    color: var(--secondary-color);
-  }
-  .rules-container p {
-    font-size: 1.1em;
-  }
-  .rules-container h2 {
-    padding-top: 1em;
-    font-size: 1.5em;
-  }
+  margin: 0em 1em 0em 1em;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.rules-container p,
+.rules-container h2 {
+  color: var(--secondary-color);
+}
+.rules-container p {
+  font-size: 1.1em;
+}
+.rules-container h2 {
+  padding-top: 1em;
+  font-size: 1.5em;
+}

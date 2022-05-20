@@ -1,38 +1,103 @@
-export const SettingsTab = () => `
-<div id="settings-tab" class="tab settings-container display">
-<!--Time Row-->
-    <div class="settings-row">
-        <div class="settings-col-info">
-            <h2>Round Time:</h2>
-            <h3>For which you must guess the words</h3>
-            <div class="settings-row-buttons">
-                <button id="button-time-sub" class="settings-button margin-right">-30 sec.</button>
-                <button id="button-time-add" class="settings-button">+30 sec.</button>
+import { MainMenu } from "./main-menu";
+import { signOutFromApp } from "../server";
+export const SettingsTab = ({
+  gameData,
+  updateGameData,
+  prevPage,
+  nextPage,
+  setPage,
+}) => {
+  const { wordLimit, timeLimit } = gameData;
+  function changeTimeCounter(isAdd) {
+    if (gameData.timeLimit < 300 && isAdd) {
+      updateGameData({ timeLimit: timeLimit + 30 });
+    } else if (gameData.timeLimit > 30 && !isAdd) {
+      updateGameData({ timeLimit: timeLimit - 30 });
+    } else return;
+  }
+  function changeWordCounter(isAdd) {
+    if (gameData.wordLimit < 200 && isAdd) {
+      updateGameData({ wordLimit: wordLimit + 10 });
+      gameData.wordLimit += 10;
+    } else if (gameData.wordLimit > 10 && !isAdd) {
+      updateGameData({ wordLimit: wordLimit - 10 });
+    } else return;
+  }
+  return (
+    <>
+      <div id="main-side" className="side display">
+        {<MainMenu setPage={setPage} />}
+        <div id="settings-tab" className="tab settings-container display">
+          <div className="settings-row">
+            <div className="settings-col-info">
+              <h2>Round Time:</h2>
+              <h3>For which you must guess the words</h3>
+              <div className="settings-row-buttons">
+                <button
+                  id="button-time-sub"
+                  className="settings-button margin-right"
+                  onClick={() => changeTimeCounter(false)}
+                >
+                  -30 sec.
+                </button>
+                <button
+                  id="button-time-add"
+                  className="settings-button"
+                  onClick={() => changeTimeCounter(true)}
+                >
+                  +30 sec.
+                </button>
+              </div>
             </div>
-        </div>
-        <div id="settings-col-time" class="settings-col-value">
-            <h2 id="minutes-counter">1</h2>
-            <h3 id="seconds-counter">:30</h3>
-            <h3>min</h3>
-        </div>
-    </div>
-<!--Time Row-->
-    <div class="settings-row">
-        <div class="settings-col-info">
-            <h2>Word Limit:</h2>
-            <h3>Necessary for victor</h3>
-            <div class="settings-row-buttons">
-                <button id="button-words-sub" class="settings-button margin-right">-10 words.</button>
-                <button id="button-words-add" class="settings-button">+10 words.</button>
+            <div id="settings-col-time" className="settings-col-value">
+              <h2 id="minutes-counter">
+                {" "}
+                {Math.trunc(timeLimit / 60).toString()}
+              </h2>
+              <h3 id="seconds-counter">
+                {timeLimit % 60 == 0
+                  ? ":00"
+                  : ":" + (timeLimit % 60).toString()}
+              </h3>
+              <h3>min</h3>
             </div>
+          </div>
+          <div className="settings-row">
+            <div className="settings-col-info">
+              <h2>Word Limit:</h2>
+              <h3>Necessary for victor</h3>
+              <div className="settings-row-buttons">
+                <button
+                  id="button-words-sub"
+                  className="settings-button margin-right"
+                  onClick={() => changeWordCounter(false)}
+                >
+                  -10 words.
+                </button>
+                <button
+                  id="button-words-add"
+                  className="settings-button"
+                  onClick={() => changeWordCounter(true)}
+                >
+                  +10 words.
+                </button>
+              </div>
+            </div>
+            <div className="settings-col-value">
+              <h2 id="words-counter">{wordLimit}</h2>
+            </div>
+          </div>
+          <div className="bottom-card-container">
+            <button
+              id="button-logout"
+              className="bottom-button"
+              onClick={signOutFromApp}
+            >
+              <span>LogOut</span>
+            </button>
+          </div>
         </div>
-        <div class="settings-col-value">
-            <h2 id="words-counter">30</h2>
-        </div>
-    </div>
-    <div class="bottom-card-container">
-    <button id="button-logout" class="bottom-button">
-        <span>LogOut</span>
-    </button>
-</div>
-</div>`
+      </div>
+    </>
+  );
+};
