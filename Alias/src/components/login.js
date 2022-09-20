@@ -5,9 +5,7 @@ import {
   redirectGoogleSignUp,
 } from "../server";
 
-export const Login = () => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+export const Login = ({userData, gameData, nextPage,prevPage, setEmail, setPassword, email, password}) => {
 
   return (
     <div id="main-card" className="main-card">

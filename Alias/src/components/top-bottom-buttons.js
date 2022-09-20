@@ -2,13 +2,15 @@ import { pages } from "../consts/pages";
 import { rotateMainCard } from "../App";
 import { getNextWord } from "./game-tab";
 
-export const TopButton = ({ pageCode, sharedProps }) => {
+export const TopButton = ({ pageCode, sharedProps, handleClick }) => {
   const { teams, teamNum } = sharedProps.gameData;
   const getText = () => {
     let result;
+  
     switch (pageCode) {
       case pages.TeamsTab.code:
         result = "Rules";
+       
         break;
       case pages.GameTab.code:
         result = "Yes";
@@ -22,6 +24,7 @@ export const TopButton = ({ pageCode, sharedProps }) => {
   };
 
   const getOnClick = () => {
+    //handleClick()
     switch (pageCode) {
       case pages.TeamsTab.code:
         {

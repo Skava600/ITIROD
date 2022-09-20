@@ -11,7 +11,7 @@ export const DEFAULT_GAME_DATA = {
     { name: "teamB", score: 0 },
   ],
   teamNum: 0,
-  timeLimit: 90,
+  timeLimit: 5,
   wordLimit: 30,
   wordNum: 0,
   wordsIndex: 0,

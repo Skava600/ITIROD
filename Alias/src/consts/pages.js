@@ -69,7 +69,7 @@ export const pages = {
   EndTab: {
     code: "EndTab",
     topAndBotButtons: false,
-    prevPageCode: "GameTab",
+    prevPageCode: "TeamsTab",
     nextPageCode: "LeaderboardTab",
 
     component: EndTab,

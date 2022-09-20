@@ -1,5 +1,8 @@
 import { MainMenu } from "./main-menu";
 import { signOutFromApp } from "../server";
+import { pages } from "../consts/pages";
+
+
 export const SettingsTab = ({
   gameData,
   updateGameData,
@@ -23,6 +26,12 @@ export const SettingsTab = ({
       updateGameData({ wordLimit: wordLimit - 10 });
     } else return;
   }
+
+  const signOutClick = () =>
+{
+  signOutFromApp();
+  setPage(pages.Login.code)
+}
   return (
     <>
       <div id="main-side" className="side display">
@@ -91,7 +100,7 @@ export const SettingsTab = ({
             <button
               id="button-logout"
               className="bottom-button"
-              onClick={signOutFromApp}
+              onClick={signOutClick}
             >
               <span>LogOut</span>
             </button>

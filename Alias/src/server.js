@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { pages } from "./consts/pages";
 import {
   getFirestore,
   collection,
@@ -45,6 +46,7 @@ export const signInWithEmail = async (loginEmail, loginPassword) => {
       alert(error.message);
     }
   );
+  
 };
 
 export const signUpWithEmail = async (loginEmail, loginPassword) => {
@@ -57,7 +59,7 @@ export const signUpWithEmail = async (loginEmail, loginPassword) => {
   );
 };
 
-export const monitorAuthState = async (callback) =>
+export const monitorAuthState = async (setUserData, setGameData, setPage) =>
   await onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log(user.displayName);
@@ -71,16 +73,20 @@ export const monitorAuthState = async (callback) =>
         })
         .finally(() =>
           getDoc(docRef).then((doc) => {
-            callback({
+            setUserData({
               hasSavedGame: !!doc.data().savedGameData,
               id: user.uid,
               isSignedIn: true,
               name: user.displayName,
-            });
+            })
+            if (!!doc.data().savedGameData)
+              setGameData(doc.data().savedGameData);
           })
         );
+
+          setPage(pages.TeamsTab.code);
     } else {
-      callback();
+      setUserData();
     }
   });
 

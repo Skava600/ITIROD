@@ -12,6 +12,7 @@ import "./styles/teams.css";
 import "./styles/themes.css";
 import "./styles/login.css";
 import "./style.css";
+import { Login } from "./components";
 export const rotateMainCard = (transform, action) => {
   document.getElementById(`main-card`).style.transform = transform;
   action();
@@ -29,9 +30,10 @@ const App = () => {
     lastWordTeamId: 0,
     scoreNum: 0,
   });
-  const swipedWordsCounter = useRef(0);
 
-  const [wordsForRound, setWordsForRound] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
   const [pageCode, setPageCode] = useState(pages.Login.code);
   const page = pages[pageCode];
 
@@ -52,6 +54,10 @@ const App = () => {
       }),
     prevPage: () => setPageCode(page.prevPageCode),
     setPage: (pageCode) => setPageCode(pageCode),
+    setEmail: (email) => setEmail(email),
+    setPassword: (password) => setPassword(password),
+    email,
+    password
   };
 
   useEffect(() => {
@@ -60,10 +66,7 @@ const App = () => {
       lastWordTeamId: 0,
       scoreNum: 0,
     });
-    monitorAuthState(setUserData);
-    if (userData.isSignedIn) {
-      sharedProps.nextPage();
-    }
+    monitorAuthState(setUserData, setGameData, setPageCode);
   }, []);
 
   const changeTheme = () => {
@@ -73,27 +76,19 @@ const App = () => {
         : `theme-green`;
   };
 
-  const saveAndExit = () => {
-    if (gameData.maxPoints > 0) {
-      console.log(userData);
-      console.log(gameData);
-      backUpGameData(userData, gameData);
-      setUserData((prevValue) => ({ ...prevValue, hasSavedGame: true }));
-    }
-    setPageCode(pages.MainMenu.code);
-  };
 
   useEffect(() => {
     switch (page.code) {
-      case pages.EndTab.code:
+      case pages.GameTab.code:
         setRoundData({
           swipedWords: [],
           lastWordTeamId: 0,
-          sdcoreNum: 0,
+          scoreNum: 0,
         });
         break;
     }
   }, [page.code]);
+
 
   return (
     <>
@@ -102,7 +97,7 @@ const App = () => {
       </header>
       <main>
         {page.topAndBotButtons && (
-          <TopButton pageCode={page.code} sharedProps={sharedProps}></TopButton>
+          <TopButton pageCode={page.code} sharedProps={sharedProps} handleClick={null}></TopButton>
         )}
         <div className="center-row">
           <div id="main-card" className="main-card">

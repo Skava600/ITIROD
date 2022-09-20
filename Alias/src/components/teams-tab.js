@@ -1,7 +1,9 @@
 import { MainMenu } from "./main-menu";
 import { BotButton, TopButton } from "./top-bottom-buttons";
 import { dices } from "../data";
+import {pages} from "../consts/pages"
 export const TeamsTab = ({
+  userData,
   gameData,
   nextPage,
   prevPage,
@@ -29,6 +31,7 @@ export const TeamsTab = ({
       });
     }
   };
+
   return (
     <>
       <div id="main-side" className="side display">

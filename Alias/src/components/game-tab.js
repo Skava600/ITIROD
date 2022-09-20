@@ -38,32 +38,23 @@ export const GameTab = ({
   setPage,
 }) => {
   let timeLeft = gameData.timeLimit;
-  let timeIsOut = false;
-  let canDealCards = true;
 
   const timerElement = document.getElementById("h2-time");
   const timer = setInterval(() => {
     timeLeft--;
     if (timeLeft === 0) {
       clearInterval(timer);
-      timeIsOut = true;
-      canDealCards = false;
       setTimeout(() => {
-        getNextWord("", sharedProps.gameData, sharedProps.roundData);
-        nextPage;
+        nextPage();
       }, 500);
     }
-
     timerElement.textContent = timeLeft;
-  }, 1000);
-
+  }, 1000); 
   return (
-    <>
       <div id="game-side" className="side display">
         <article id="article-word" className="card-word">
-          Word
+          Lets Start!
         </article>
       </div>
-    </>
   );
 };
